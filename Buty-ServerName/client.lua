@@ -121,7 +121,7 @@ end)
 RegisterCommand("changue", function(source, args)
     SetNuiFocus(true, true)
     SendNUIMessage({
-        type = 'changue',
+        type = 'change',
         nameserver = Config.NameServer,
         nameserver2 = Config.NameServer
     })
