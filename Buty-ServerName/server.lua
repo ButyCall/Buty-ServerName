@@ -1,21 +1,35 @@
 ESX = nil
+TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
 
-TriggerEvent('esx:getSharedObject', function(obj) 
-    ESX = obj 
-end)
-
-RegisterNetEvent('BCall:Data')
-AddEventHandler('BCall:Data', function ()
-    local staff = 0
-    local players = 0
-    for _, playerId in ipairs(GetPlayers()) do
+local function GetTotalStaff(players)
+    local totalStaff = 0
+    for _, playerId in ipairs(players) do
         local xPlayer = ESX.GetPlayerFromId(playerId)
-        if xPlayer.getGroup() == "admin" or xPlayer.getGroup() == "superadmin" or xPlayer.getGroup() == "moderator" then
-            staff = staff + 1
-            players = players + 1
-        else 
-            players = players + 1
+        if xPlayer then
+            local group = xPlayer.getGroup()
+            if Config.Permissions[group] then
+                totalStaff = totalStaff + 1
+            end
         end
     end
-    TriggerClientEvent('BCall:player', source, staff, players)
+    return totalStaff
+end
+
+local function updatePlayers()
+    local getPlayers = GetPlayers()
+    local totalStaff = GetTotalStaff(getPlayers)
+    local totalPlayer = #getPlayers
+    Wait(2000) -- Provide error
+    TriggerClientEvent('BCall:updatePlayersData', -1, totalStaff, totalPlayer)
+end
+
+CreateThread(function()
+    updatePlayers()
+    TriggerClientEvent('BCall:openUI', -1)
+end)
+
+RegisterNetEvent('esx:playerLoaded')
+AddEventHandler('esx:playerLoaded', function(id, xPlayer)
+    updatePlayers()
+    TriggerClientEvent('BCall:openUI', id)
 end)
