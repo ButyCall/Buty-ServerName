@@ -7,7 +7,3 @@ Config.Top = false                            --> If true, it will default to th
 Config.MaxPlayer = "100"                      --> Maximum number of players that can enter your server
 
 Config.NameServer = "-NAMESERVERRP.COM-"      --> Name of your server
-
-Config.Admin = {                              --> Admin you can use /staff /nostaff
-    'steam:11000013deeb4b5',
-}
