@@ -7,3 +7,9 @@ Config.Top = false                            --> If true, it will default to th
 Config.MaxPlayer = "100"                      --> Maximum number of players that can enter your server
 
 Config.NameServer = "-NAMESERVERRP.COM-"      --> Name of your server
+
+Config.Permissions  = {
+    ["admin"] = true,
+    ["superadmin"] = true,
+    ["moderator"] = true,
+}
